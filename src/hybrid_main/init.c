@@ -4,7 +4,7 @@
 #include "hybrid_structure.h"
 
 
-int hybrid_init() {
+int hybrid_init(int *argc, char ***argv, hybrid_node_object *root) {
     int provided;
     MPI_Init_thread(NULL, NULL, MPI_THREAD_MULTIPLE, &provided);
     if (provided < MPI_THREAD_MULTIPLE) {
@@ -84,6 +84,56 @@ int hybrid_init() {
     return 0;
 }
 
+int hybrid_init_thread(int required, int *provided) {
+    MPI_Init_thread(NULL, NULL, required, provided);
+    if (*provided < required) {
+        printf("The MPI library does not have the required thread support\n");
+        MPI_Abort(MPI_COMM_WORLD, 1);
+    }
+    return 0;
+}
+
+int hybrid_query_thread(int *provided) {
+    int thread_support;
+    MPI_Query_thread(&thread_support);
+    *provided = thread_support;
+    return 0;
+}
+
+int hybrid_session_init(hybrid_info_t *info, hybrid_session_t *session) {
+    return MPI_Session_init(info->mpi_info, MPI_ERRORS_RETURN, &session->mpi_session);
+}
+
+int hybrid_session_finalize(hybrid_session_t *session) {
+    return MPI_Session_finalize(&session->mpi_session);
+}
+
+int hybrid_session_get_num_psets(hybrid_session_t *session, const char *pset_name, int *num_psets) {
+    return MPI_Session_get_num_psets(session->mpi_session, pset_name, num_psets);
+}
+
+int hybrid_session_get_nth_pset(hybrid_session_t *session, int n, char *pset_name, int *resultlen) {
+    return MPI_Session_get_nth_pset(session->mpi_session, n, pset_name, resultlen);
+}
+
+int hybrid_session_get_info(hybrid_session_t *session, hybrid_info_t *info) {
+    return MPI_Session_get_info(session->mpi_session, &info->mpi_info);
+}
+
+int hybrid_session_get_pset_info(hybrid_session_t *session, const char *pset_name, hybrid_info_t *info) {
+    return MPI_Session_get_pset_info(session->mpi_session, pset_name, &info->mpi_info);
+}
+
+int hybrid_abort(hybrid_interface_t *hybrid_root_interface, int errorcode) {
+    return MPI_Abort(hybrid_root_interface->mpi_struct.comm, errorcode);
+}
+
+int hybrid_finalized(int *flag) {
+    int finalized;
+    MPI_Finalized(&finalized);
+    *flag = finalized;
+    return 0;
+}
 
 int hybrid_finalise() {
     MPI_Finalize();

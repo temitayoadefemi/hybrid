@@ -169,6 +169,405 @@ int hybrid_op_create(hybrid_user_function_t *function, int commute, hybrid_op_t 
     return MPI_Op_create(function, commute, &op->mpi_op);
     
 }
+
+int hybrid_op_create_c(hybrid_user_function_t *function, int commute, hybrid_op_t *op) {
+    return MPI_Op_create(function, commute, &op->mpi_op);
+    
+}
+
+int hybrid_op_free(hybrid_op_t *op) {
+    return MPI_Op_free(&op->mpi_op);
+    
+}
+
+int hybrid_allreduce(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface) {
+    return MPI_Allreduce(send_data, recv_data, count, datatype, op, hybrid_root_interface->mpi_struct.comm);
+    
+}
+
+int hybrid_allreduce_c(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface) {
+    return MPI_Allreduce(send_data, recv_data, count, datatype, op, hybrid_root_interface->mpi_struct.comm);
+    
+}
+
+int hybrid_reduce_local(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op) {
+    return MPI_Reduce_local(send_data, recv_data, count, datatype, op);
+    
+}
+
+int hybrid_reduce_local_c(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op) {
+    return MPI_Reduce_local(send_data, recv_data, count, datatype, op);
+    
+}
+
+int hybrid_op_commutative(hybrid_op_t *op, int *commute) {
+    return MPI_Op_commutative(&op->mpi_op, commute);
+    
+}
+
+int hybrid_reduce_scatter_block(void *send_data, void *recv_data, int recv_count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface) {
+    return MPI_Reduce_scatter_block(send_data, recv_data, recv_count, datatype, op, hybrid_root_interface->mpi_struct.comm);
+    
+}
+
+int hybrid_reduce_scatter_block_c(void *send_data, void *recv_data, int recv_count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface) {
+    return MPI_Reduce_scatter_block(send_data, recv_data, recv_count, datatype, op, hybrid_root_interface->mpi_struct.comm);
+    
+}
+
+int hybrid_reduce_scatter(void *send_data, void *recv_data, int *recv_counts, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface) {
+    return MPI_Reduce_scatter(send_data, recv_data, recv_counts, datatype, op, hybrid_root_interface->mpi_struct.comm);
+    
+}
+int hybrid_reduce_scatter_c(void *send_data, void *recv_data, int *recv_counts, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface) {
+    return MPI_Reduce_scatter(send_data, recv_data, recv_counts, datatype, op, hybrid_root_interface->mpi_struct.comm);
+    
+}
+
+int hybrid_scan(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface) {
+    return MPI_Scan(send_data, recv_data, count, datatype, op, hybrid_root_interface->mpi_struct.comm);
+    
+}
+
+int hybrid_scan_c(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface) {
+    return MPI_Scan(send_data, recv_data, count, datatype, op, hybrid_root_interface->mpi_struct.comm);
+    
+}
+
+int hybrid_exsscan(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface) {
+    return MPI_Exscan(send_data, recv_data, count, datatype, op, hybrid_root_interface->mpi_struct.comm);
+    
+}
+
+int hybrid_exsscan_c(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface) {
+    return MPI_Exscan(send_data, recv_data, count, datatype, op, hybrid_root_interface->mpi_struct.comm);
+    
+}
+
+int hybrid_ibarrier(hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Ibarrier(hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_ibcast(void *data, int count, hybrid_datatype_t *datatype, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Ibcast(data, count, datatype, root, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_ibcast_c(void *data, int count, hybrid_datatype_t *datatype, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Ibcast(data, count, datatype, root, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_igather(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int recv_count, hybrid_datatype_t *recv_datatype, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Igather(send_data, send_count, send_datatype, recv_data, recv_count, recv_datatype, root, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_igather_c(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int recv_count, hybrid_datatype_t *recv_datatype, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Igather(send_data, send_count, send_datatype, recv_data, recv_count, recv_datatype, root, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_igatherv(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int *recv_counts, int *displs, hybrid_datatype_t *recv_datatype, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Igatherv(send_data, send_count, send_datatype, recv_data, recv_counts, displs, recv_datatype, root, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_igatherv_c(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int *recv_counts, int *displs, hybrid_datatype_t *recv_datatype, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Igatherv(send_data, send_count, send_datatype, recv_data, recv_counts, displs, recv_datatype, root, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_iscatter(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int recv_count, hybrid_datatype_t *recv_datatype, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Iscatter(send_data, send_count, send_datatype, recv_data, recv_count, recv_datatype, root, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_iscatter_c(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int recv_count, hybrid_datatype_t *recv_datatype, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Iscatter(send_data, send_count, send_datatype, recv_data, recv_count, recv_datatype, root, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_iscatterv(void *send_data, int *send_counts, int *displs, hybrid_datatype_t *send_datatype, void *recv_data, int recv_count, hybrid_datatype_t *recv_datatype, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Iscatterv(send_data, send_counts, displs, send_datatype, recv_data, recv_count, recv_datatype, root, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_iscatterv_c(void *send_data, int *send_counts, int *displs, hybrid_datatype_t *send_datatype, void *recv_data, int recv_count, hybrid_datatype_t *recv_datatype, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Iscatterv(send_data, send_counts, displs, send_datatype, recv_data, recv_count, recv_datatype, root, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_iallgather(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int recv_count, hybrid_datatype_t *recv_datatype, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Iallgather(send_data, send_count, send_datatype, recv_data, recv_count, recv_datatype, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_iallgather_c(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int recv_count, hybrid_datatype_t *recv_datatype, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Iallgather(send_data, send_count, send_datatype, recv_data, recv_count, recv_datatype, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+int hybrid_iallgatherv(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int *recv_counts, int *displs, hybrid_datatype_t *recv_datatype, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Iallgatherv(send_data, send_count, send_datatype, recv_data, recv_counts, displs, recv_datatype, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+int hybrid_iallgatherv_c(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int *recv_counts, int *displs, hybrid_datatype_t *recv_datatype, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Iallgatherv(send_data, send_count, send_datatype, recv_data, recv_counts, displs, recv_datatype, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+int hybrid_ialltoall(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int recv_count, hybrid_datatype_t *recv_datatype, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Ialltoall(send_data, send_count, send_datatype, recv_data, recv_count, recv_datatype, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+int hybrid_ialltoall_c(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int recv_count, hybrid_datatype_t *recv_datatype, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Ialltoall(send_data, send_count, send_datatype, recv_data, recv_count, recv_datatype, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_ialltoallv(void *send_data, int *send_counts, int *sdispls, hybrid_datatype_t *send_datatype, void *recv_data, int *recv_counts, int *rdispls, hybrid_datatype_t *recv_datatype, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Ialltoallv(send_data, send_counts, sdispls, send_datatype, recv_data, recv_counts, rdispls, recv_datatype, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+int hybrid_ialltoallv_c(void *send_data, int *send_counts, int *sdispls, hybrid_datatype_t *send_datatype, void *recv_data, int *recv_counts, int *rdispls, hybrid_datatype_t *recv_datatype, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Ialltoallv(send_data, send_counts, sdispls, send_datatype, recv_data, recv_counts, rdispls, recv_datatype, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_ialltoallw(void *send_data, int *send_counts, int *sdispls, hybrid_datatype_t *send_datatypes, void *recv_data, int *recv_counts, int *rdispls, hybrid_datatype_t *recv_datatypes, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Ialltoallw(send_data, send_counts, sdispls, send_datatypes, recv_data, recv_counts, rdispls, recv_datatypes, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_ialltoallw_c(void *send_data, int *send_counts, int *sdispls, hybrid_datatype_t *send_datatypes, void *recv_data, int *recv_counts, int *rdispls, hybrid_datatype_t *recv_datatypes, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Ialltoallw(send_data, send_counts, sdispls, send_datatypes, recv_data, recv_counts, rdispls, recv_datatypes, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_ireduce(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Ireduce(send_data, recv_data, count, datatype, op, root, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_ireduce_c(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Ireduce(send_data, recv_data, count, datatype, op, root, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_iallreduce(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Iallreduce(send_data, recv_data, count, datatype, op, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_iallreduce_c(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Iallreduce(send_data, recv_data, count, datatype, op, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+int hybrid_ireduce_scatter_block(void *send_data, void *recv_data, int recv_count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Ireduce_scatter_block(send_data, recv_data, recv_count, datatype, op, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_ireduce_scatter_block_c(void *send_data, void *recv_data, int recv_count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Ireduce_scatter_block(send_data, recv_data, recv_count, datatype, op, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+int hybrid_ireduce_scatter(void *send_data, void *recv_data, int *recv_counts, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Ireduce_scatter(send_data, recv_data, recv_counts, datatype, op, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+int hybrid_ireduce_scatter_c(void *send_data, void *recv_data, int *recv_counts, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Ireduce_scatter(send_data, recv_data, recv_counts, datatype, op, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_iscan(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Iscan(send_data, recv_data, count, datatype, op, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_iscan_c(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Iscan(send_data, recv_data, count, datatype, op, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_iexscan(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Iexscan(send_data, recv_data, count, datatype, op, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_iexscan_c(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Iexscan(send_data, recv_data, count, datatype, op, hybrid_root_interface->mpi_struct.comm, request);
+    
+}
+
+int hybrid_barrier_init(hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Barrier_init(hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_bcast_init(void *data, int count, hybrid_datatype_t *datatype, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Bcast_init(data, count, datatype, root, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_bcast_init_c(void *data, int count, hybrid_datatype_t *datatype, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Bcast_init(data, count, datatype, root, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_gather_init(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int recv_count, hybrid_datatype_t *recv_datatype, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Gather_init(send_data, send_count, send_datatype, recv_data, recv_count, recv_datatype, root, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_gather_init_c(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int recv_count, hybrid_datatype_t *recv_datatype, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Gather_init(send_data, send_count, send_datatype, recv_data, recv_count, recv_datatype, root, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_gatherv_init(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int *recv_counts, int *displs, hybrid_datatype_t *recv_datatype, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Gatherv_init(send_data, send_count, send_datatype, recv_data, recv_counts, displs, recv_datatype, root, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_gatherv_init_c(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int *recv_counts, int *displs, hybrid_datatype_t *recv_datatype, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Gatherv_init(send_data, send_count, send_datatype, recv_data, recv_counts, displs, recv_datatype, root, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_scatter_init(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int recv_count, hybrid_datatype_t *recv_datatype, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Scatter_init(send_data, send_count, send_datatype, recv_data, recv_count, recv_datatype, root, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_scatter_init_c(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int recv_count, hybrid_datatype_t *recv_datatype, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Scatter_init(send_data, send_count, send_datatype, recv_data, recv_count, recv_datatype, root, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_scatterv_init(void *send_data, int *send_counts, int *displs, hybrid_datatype_t *send_datatype, void *recv_data, int recv_count, hybrid_datatype_t *recv_datatype, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Scatterv_init(send_data, send_counts, displs, send_datatype, recv_data, recv_count, recv_datatype, root, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_scatterv_init_c(void *send_data, int *send_counts, int *displs, hybrid_datatype_t *send_datatype, void *recv_data, int recv_count, hybrid_datatype_t *recv_datatype, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Scatterv_init(send_data, send_counts, displs, send_datatype, recv_data, recv_count, recv_datatype, root, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_allgather_init(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int recv_count, hybrid_datatype_t *recv_datatype, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Allgather_init(send_data, send_count, send_datatype, recv_data, recv_count, recv_datatype, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_allgather_init_c(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int recv_count, hybrid_datatype_t *recv_datatype, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Allgather_init(send_data, send_count, send_datatype, recv_data, recv_count, recv_datatype, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+  
+}
+
+int hybrid_allgatherv_init(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int *recv_counts, int *displs, hybrid_datatype_t *recv_datatype, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Allgatherv_init(send_data, send_count, send_datatype, recv_data, recv_counts, displs, recv_datatype, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_allgatherv_init_c(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int *recv_counts, int *displs, hybrid_datatype_t *recv_datatype, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Allgatherv_init(send_data, send_count, send_datatype, recv_data, recv_counts, displs, recv_datatype, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_alltoall_init(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int recv_count, hybrid_datatype_t *recv_datatype, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Alltoall_init(send_data, send_count, send_datatype, recv_data, recv_count, recv_datatype, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_alltoall_init_c(void *send_data, int send_count, hybrid_datatype_t *send_datatype, void *recv_data, int recv_count, hybrid_datatype_t *recv_datatype, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Alltoall_init(send_data, send_count, send_datatype, recv_data, recv_count, recv_datatype, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_alltoallv_init(void *send_data, int *send_counts, int *sdispls, hybrid_datatype_t *send_datatype, void *recv_data, int *recv_counts, int *rdispls, hybrid_datatype_t *recv_datatype, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Alltoallv_init(send_data, send_counts, sdispls, send_datatype, recv_data, recv_counts, rdispls, recv_datatype, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_alltoallv_init_c(void *send_data, int *send_counts, int *sdispls, hybrid_datatype_t *send_datatype, void *recv_data, int *recv_counts, int *rdispls, hybrid_datatype_t *recv_datatype, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Alltoallv_init(send_data, send_counts, sdispls, send_datatype, recv_data, recv_counts, rdispls, recv_datatype, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_alltoallw_init(void *send_data, int *send_counts, int *sdispls, hybrid_datatype_t *send_datatypes, void *recv_data, int *recv_counts, int *rdispls, hybrid_datatype_t *recv_datatypes, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Alltoallw_init(send_data, send_counts, sdispls, send_datatypes, recv_data, recv_counts, rdispls, recv_datatypes, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_alltoallw_init_c(void *send_data, int *send_counts, int *sdispls, hybrid_datatype_t *send_datatypes, void *recv_data, int *recv_counts, int *rdispls, hybrid_datatype_t *recv_datatypes, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Alltoallw_init(send_data, send_counts, sdispls, send_datatypes, recv_data, recv_counts, rdispls, recv_datatypes, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_reduce_init(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Reduce_init(send_data, recv_data, count, datatype, op, root, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_reduce_init_c(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op, int root, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Reduce_init(send_data, recv_data, count, datatype, op, root, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_allreduce_init(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Allreduce_init(send_data, recv_data, count, datatype, op, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_allreduce_init_c(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Allreduce_init(send_data, recv_data, count, datatype, op, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_reduce_scatter_block_init(void *send_data, void *recv_data, int recv_count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Reduce_scatter_block_init(send_data, recv_data, recv_count, datatype, op, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_reduce_scatter_block_init_c(void *send_data, void *recv_data, int recv_count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Reduce_scatter_block_init(send_data, recv_data, recv_count, datatype, op, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_reduce_scatter_init(void *send_data, void *recv_data, int *recv_counts, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Reduce_scatter_init(send_data, recv_data, recv_counts, datatype, op, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_reduce_scatter_init_c(void *send_data, void *recv_data, int *recv_counts, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Reduce_scatter_init(send_data, recv_data, recv_counts, datatype, op, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_scan_init(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Scan_init(send_data, recv_data, count, datatype, op, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_scan_init_c(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Scan_init(send_data, recv_data, count, datatype, op, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_exscan_init(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Exscan_init(send_data, recv_data, count, datatype, op, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+int hybrid_exscan_init_c(void *send_data, void *recv_data, int count, hybrid_datatype_t *datatype, hybrid_op_t *op, hybrid_interface_t *hybrid_root_interface, hybrid_request_t *request) {
+    return MPI_Exscan_init(send_data, recv_data, count, datatype, op, hybrid_root_interface->mpi_struct.comm, MPI_INFO_NULL, request);
+    
+}
+
+
+
 int hybrid_wait(hybrid_request_t *request, hybrid_status_t *status) {
     return MPI_Wait(request, &status->mpi_status);
     

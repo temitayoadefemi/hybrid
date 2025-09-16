@@ -59,4 +59,24 @@ struct HYBRID_USER_FUNCTION {
     MPI_User_function *mpi_user_function;
 }; hybrid_user_function_t;
 
+struct HYBRID_GROUP {
+    MPI_Group mpi_group;
+}; hybrid_group_t;
+
+struct HYBRID_WTIME {
+    double mpi_wtime;
+}; hybrid_wtime_t;
+
+struct HYBRID_WTICK {
+    double mpi_wtick;
+}; hybrid_wtick_t;
+
+struct HYBRID_WIN {
+    MPI_Win mpi_win;
+}; hybrid_win_t;
+
+struct HYBRID_T_ENUM {
+    MPI_T_enum mpi_t_enum;
+}; hybrid_t_enum_t;
+
 #endif	//__MPI__STRUCTS_H__
