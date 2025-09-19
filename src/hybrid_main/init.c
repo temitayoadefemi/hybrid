@@ -19,12 +19,6 @@ int hybrid_init(int *argc, char ***argv, hybrid_node_object *root) {
     int thread_count = omp_get_max_threads();
     int thread_id;
 
-    // Print the rank and thread information
-    #pragma omp parallel private(thread_id)
-    {
-        thread_id = omp_get_thread_num();
-        printf("Hello from process %d of %d, thread %d of %d\n", rank, size, thread_id, thread_count);
-    }
 
     hybrid_node_object *hybrid_root;
     hybrid_root = (hybrid_node_object *)malloc(sizeof(hybrid_node_object));

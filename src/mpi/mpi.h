@@ -51,9 +51,6 @@ struct HYBRID_SESSION {
     MPI_Session mpi_session;
 }; hybrid_session_t;
 
-struct HYBRID_AINT {
-    MPI_Aint mpi_aint;
-}; hybrid_aint_t;
 
 struct HYBRID_USER_FUNCTION {
     MPI_User_function *mpi_user_function;
@@ -78,5 +75,18 @@ struct HYBRID_WIN {
 struct HYBRID_T_ENUM {
     MPI_T_enum mpi_t_enum;
 }; hybrid_t_enum_t;
+
+struct HYBRID_SESSION {
+    MPI_Session mpi_session;
+}; hybrid_session_t;
+
+struct HYBRID_ERRHANDLER {
+    MPI_Errhandler mpi_errhandler;
+}; hybrid_errhandler_t;
+
+struct HYBRID_GROUP {
+    MPI_Group mpi_group;
+}; hybrid_group_t;
+
 
 #endif	//__MPI__STRUCTS_H__
